@@ -1,26 +1,36 @@
 const fs = require("fs");
 const lighthouse = require("lighthouse");
 const chromeLauncher = require("chrome-launcher");
+const constants = require("./constants");
 
 (async () => {
   const chrome = await chromeLauncher.launch({ chromeFlags: ["--headless"] });
+  const formFactor = "mobile";
   const options = {
     logLevel: "info",
     output: "json",
     onlyCategories: ["performance"],
-    formFactor: "mobile",
     port: chrome.port,
     extends: "lighthouse:default",
-    settings: {
-      onlyAudits: [
-        "first-contentful-paint",
-        "speed-index",
-        "largest-contentful-paint",
-        "total-blocking-time",
-        "interactive",
-        "cumulative-layout-shift",
-      ],
-    },
+    settings:
+      formFactor === "mobile"
+        ? {
+            formFactor,
+            onlyAudits: [
+              "first-contentful-paint",
+              "speed-index",
+              "largest-contentful-paint",
+              "total-blocking-time",
+              "interactive",
+              "cumulative-layout-shift",
+            ],
+          }
+        : {
+            formFactor: "desktop",
+            throttling: constants.throttling.desktopDense4G,
+            screenEmulation: constants.screenEmulationMetrics.desktop,
+            emulatedUserAgent: constants.userAgents.desktop,
+          },
   };
   let fcp = 0;
   let si = 0;
@@ -30,10 +40,10 @@ const chromeLauncher = require("chrome-launcher");
   let cumulativeLayoutShift = 0;
   let score = 0;
 
-  const number_of_runs = 1;
+  const number_of_runs = 15;
   for (let i = 0; i < number_of_runs; i++) {
     const runnerResult = await lighthouse(
-      "https://web-main-bfnh7zbhp-city-furniture.vercel.app/product/9719211/hilton-two-tone-96-table-4-skirted-chairs",
+      "https://web-main-pj0c8761s-city-furniture.vercel.app/browse/dining-room",
       options
     );
     fcp = fcp + runnerResult.lhr.audits["first-contentful-paint"].numericValue;
