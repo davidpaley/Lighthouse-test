@@ -69,13 +69,13 @@ const constants = require("./constants");
     score = score + runnerResult.lhr.categories.performance.score * 100;
   }
 
-  fcp = (fcp / numberOfRuns).toFixed(4);
-  si = (si / numberOfRuns).toFixed(4);
-  lcp = (lcp / numberOfRuns).toFixed(4);
-  tbt = (tbt / numberOfRuns).toFixed(4);
-  interactive = (interactive / numberOfRuns).toFixed(4);
-  cumulativeLayoutShift = (cumulativeLayoutShift / numberOfRuns).toFixed(4);
-  score = (score / numberOfRuns).toFixed(4);
+  fcp = (fcp / numberOfRuns).toFixed(2);
+  si = (si / numberOfRuns).toFixed(2);
+  lcp = (lcp / numberOfRuns).toFixed(2);
+  tbt = (tbt / numberOfRuns).toFixed(2);
+  interactive = (interactive / numberOfRuns).toFixed(2);
+  cumulativeLayoutShift = (cumulativeLayoutShift / numberOfRuns).toFixed(2);
+  score = (score / numberOfRuns).toFixed(2);
   // `.lhr` is the Lighthouse Result as a JS object
   // console.log("Report is done for", runnerResult.lhr.finalUrl);
   console.log({
