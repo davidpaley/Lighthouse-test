@@ -5,7 +5,7 @@ You can run several lighthouse tests and easily get the average of them!
 ## How to execute the project
 You can run this project with the following commands 
 
-`$ npm i`
+`$ yarn`
 
 `$ node main.js [urlToTest] [numberOfRuns] [formFactor]`
 
